@@ -5,7 +5,7 @@ services:
   jenkins:
     image: jenkins/jenkins:lts
     volumes:
-      - /var/jenkins_home
+       - jenkins_data:/var/jenkins_home
     networks:
       - sonarnet
     ports:
@@ -13,7 +13,7 @@ services:
       - '50000:50000'
 
   sonarqube:
-    image: sonarqube
+    image: sonarqube:7.6-community 
     volumes:
       - sonarqube_conf:/opt/sonarqube/conf
       - sonarqube_data:/opt/sonarqube/data
@@ -26,7 +26,6 @@ services:
     environment:
       - sonar.jdbc.username=sonar
       - sonar.jdbc.password=sonar
-      #- sonar.jdbc.url=jdbc:postgresql://postgres/sonar
       - sonar.jdbc.url=jdbc:postgresql://db:5432/sonar
 
   db:
@@ -51,3 +50,4 @@ volumes:
   sonarqube_bundled-plugins:
   postgresql:
   postgresql_data:
+  jenkins_data:
